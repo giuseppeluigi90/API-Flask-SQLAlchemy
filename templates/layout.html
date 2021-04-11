@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" >
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    </head>
+
+    <body>
+        
+        <div class="container">
+            <div id="nav" class="row col-12">   
+                <!-- Barra de navegacion -->
+                <nav>
+                    <ul>
+                        <li> <a href="/ping">  Home </a> </li> 
+                        <li> <a href="#"> Account </a> </li>
+                        <li> <a href="#"> Invoices </a> </li>
+                        <li> <a href="#"> Objectives </a> </li>
+                        <li> <a href="#"> Scrapers </a> </li>
+                        <li> <a href="#"> Scrapers Tasks </a> </li>
+                    </ul>
+                </nav>            
+            </div>
+
+            <section id="content" style="width: 100%; height: 500px; margin: 20px 0px;">
+                
+                {% block content %}
+
+                {% endblock %}
+                
+            </section>
+
+            <section style="width: 100%; height: 100px; margin: 10px 0px;">
+                <footer id="footer">
+                    <div class="row col-12">
+                        <h1 style="color: brown;"> Abril - 2021  </h1>
+                    </div>
+                </footer>
+            </section>
+
+        </div>
+        
+    </body>
+</html>

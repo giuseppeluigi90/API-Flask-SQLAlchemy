@@ -2,13 +2,13 @@ from flask import Flask, render_template, redirect, url_for, request, flash, jso
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String
 from flask_marshmallow import Marshmallow
+from src.config import config
+
+enviroment = config['development']
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://scx:y2K.scx@localhost/scxcp'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db = SQLAlchemy(app)
+db = SQLAlchemy(enviroment)
 ma = Marshmallow(app)
 
 class Prueba(db.Model):

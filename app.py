@@ -74,10 +74,6 @@ def update_prueba(id):
     db.session.commit()
     return prueba_schema.jsonify(prueba)
 
-
-
-
-
 # Dashboard
 @app.route('/dashboard')
 def dashboard():

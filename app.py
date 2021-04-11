@@ -1,31 +1,16 @@
+from src.models import Pru, Prueba
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String
 from flask_marshmallow import Marshmallow
 
+Prueba = Pru()
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://scx:y2K.scx@scx/scxcp'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app)
+db = DB(app)
 ma = Marshmallow(app)
 
-class Prueba(db.Model):
-    id = Column(Integer, primary_key = True)
-    name = Column(String)
-    address = Column(String)
-    email = Column(String)
-
-    def __init__(self, name, address, email):
-        self.name = name
-        self.address = address
-        self.email = email
-
-    def __repr__(self):
-        return '<User %r>' % self.name
-
-# db.create_all()
 
 class PruebaSchema(ma.Schema):
     class Meta:

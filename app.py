@@ -1,8 +1,8 @@
-from src.models import Pru, Prueba
+from src.models import Prueba
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from flask_marshmallow import Marshmallow
 
-Prueba = Pru()
+Prueba = Prueba()
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://scx:y2K.scx@scx/scxcp'

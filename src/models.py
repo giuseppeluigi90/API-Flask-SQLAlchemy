@@ -1,9 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String
+from flask_sqlalchemy import SQLAlchemy, Column, Integer, String
 
-DB = SQLAlchemy()
-
-class Prueba(DB.Model):
+class Prueba(db.Model):
     id = Column(Integer, primary_key = True)
     name = Column(String)
     address = Column(String)
@@ -16,7 +13,5 @@ class Prueba(DB.Model):
 
     def __repr__(self):
         return '<User %r>' % self.name
-
-    Pru = Prueba()
 
 # db.create_all()

@@ -29,7 +29,7 @@ class Prueba(db.Model):
 
 class PruebaSchema(ma.Schema):
     class Meta:
-        fields = ('id','name','address','email')
+        fields = ('name','address','email')
 
 prueba_schema = PruebaSchema()
 pruebas_schema = PruebaSchema(many=True)
@@ -74,14 +74,15 @@ def update_prueba(id):
     db.session.commit()
     return prueba_schema.jsonify(prueba)
 
-# Dashboard
+""" # Dashboard
 @app.route('/dashboard')
 def dashboard():
-    return render_template('layout.html')
+    return render_template('layout.html') """
 
-@app.route('/ping')
+""" @app.route('/ping')
 def index():
-    return "<h1 style='color: red'> <a href='/dashboard'>  Pong... </a> </h1>"
+    return "<h1 style='color: red'> <a href='/dashboard'>  Pong... </a> </h1>" """
 
+# Correr aplicacion
 if __name__ == "__main__":
     app.run(debug=True)

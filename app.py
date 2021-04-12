@@ -1,6 +1,7 @@
+from models import Account
 from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from SQLAlchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
@@ -11,31 +12,35 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-class Prueba(db.Model):
-    id = Column(Integer, primary_key = True)
-    name = Column(String)
-    address = Column(String)
-    email = Column(String)
 
-    def __init__(self, name, address, email):
-        self.name = name
-        self.address = address
-        self.email = email
-
-    def __repr__(self):
-        return '<User %r>' % self.name
-
-# db.create_all()
-
-
-class PruebaSchema(ma.Schema):
+class AccountSchema(ma.Schema):
     class Meta:
         fields = ('name','address','email')
 
-prueba_schema = PruebaSchema()
-pruebas_schema = PruebaSchema(many=True)
+account_schema = AccountSchema()
+accounts_schema = AccountSchema(many=True)
 
-# Prueba
+
+@app.route('/account', methods=['GET', 'POST'])
+def get_account():
+    if request.method == 'POST':
+        name = request.json['name']
+        address = request.json['address']
+        email = request.json['email']
+
+        nueva_account = Account(name, address, email)
+        db.session.add(nueva_account)
+        db.session.commit()
+
+        return account_schema.jsonify(nueva_account)
+    
+    elif request.method == 'GET':
+        all_accounts = Account.query.all()
+        result = accounts_schema.dump(all_accounts)
+
+        return jsonify(result)
+
+
 @app.route('/prueba', methods=['POST'])
 def create_prueba():
     name = request.json['name']
@@ -48,12 +53,6 @@ def create_prueba():
 
     return prueba_schema.jsonify(nueva_prueba)
 
-@app.route('/prueba', methods=['GET'])
-def get_pruebas():
-    all_pruebas = Prueba.query.all()
-    result = pruebas_schema.dump(all_pruebas)
-
-    return jsonify(result)
 
 @app.route('/prueba/<id>', methods=['GET'])
 def get_prueba(id):
@@ -75,15 +74,7 @@ def update_prueba(id):
     db.session.commit()
     return prueba_schema.jsonify(prueba)
 
-""" # Dashboard
-@app.route('/dashboard')
-def dashboard():
-    return render_template('layout.html') """
 
-""" @app.route('/ping')
-def index():
-    return "<h1 style='color: red'> <a href='/dashboard'>  Pong... </a> </h1>" """
-
-# Correr aplicacion
+# Run application
 if __name__ == "__main__":
     app.run(debug=True)
